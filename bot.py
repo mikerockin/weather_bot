@@ -2,7 +2,7 @@ import telebot
 from pyowm.owm import OWM
 
 
-bot = telebot.TeleBot('')
+bot = telebot.TeleBot('5084306963:AAHChumsLFKYc0gc1HskiPuRQllRSy3g0KQ')
 
 def weather(city):
     owm = OWM('324ec9d2d156f6e482a1fcf3e81d6588')
