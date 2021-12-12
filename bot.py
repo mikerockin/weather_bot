@@ -1,9 +1,11 @@
 import telebot
 import requests
 from datetime import datetime
+import os
 
 
-bot = telebot.TeleBot('')
+
+bot = telebot.TeleBot('5084306963:AAHChumsLFKYc0gc1HskiPuRQllRSy3g0KQ')
 current_url = 'http://api.openweathermap.org/data/2.5/weather'
 forecast_url = 'http://api.openweathermap.org/data/2.5/forecast'
 appid = '324ec9d2d156f6e482a1fcf3e81d6588'
@@ -157,4 +159,7 @@ def get_weather_for_three_days(message):
         bot.send_message(message.from_user.id, 'Ooops... Город не найден в базе, попробуйте ещё раз')
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_for_three_days)
+
+os.environ['TOKEN']
+
 bot.polling()
