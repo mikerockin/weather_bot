@@ -4,8 +4,6 @@ from datetime import datetime
 import time
 import os
 
-
-
 bot = telebot.TeleBot('')
 current_url = 'http://api.openweathermap.org/data/2.5/weather'
 forecast_url = 'http://api.openweathermap.org/data/2.5/forecast'
@@ -23,11 +21,10 @@ def current_weather(city):
     humidity = (data['main']['humidity'])
     conditions = (data['weather'][0]['description'])
     sunrise_unix = int((data['sys']['sunrise']))
-    sunrise = time.strftime("%H:%M", time.localtime(int(sunrise_unix)))
     sunset_unix = int((data['sys']['sunset']))
     sunset = time.strftime("%H:%M", time.localtime(int(sunset_unix)))
     timezone = (data['timezone'])/3600
-    return temp, temp_feels_like, wind, pressure_norm, humidity, conditions, sunrise, sunset, timezone
+    return temp, temp_feels_like, wind, pressure_norm, humidity, conditions, sunrise_unix, sunset, timezone
 
 def tomorrow_weather(city):
     response = requests.get(url=forecast_url, params=dict(q=city, APPID=appid, lang='ru', units='metric'))
