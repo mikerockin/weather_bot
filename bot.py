@@ -22,7 +22,7 @@ def current_weather(city):
     humidity = (data['main']['humidity'])
     conditions = (data['weather'][0]['description'])
     sunrise_unix = int((data['sys']['sunrise']))
-    sunrise = (datetime.fromtimestamp(sunrise_unix).strftime('%Y-%m-%d %H:%M:%S'))
+    sunrise = (datetime.utcfromtimestamp(sunrise_unix).strftime('%Y-%m-%d %H:%M:%S'))
     sunset_unix = int((data['sys']['sunset']))
     sunset = (datetime.fromtimestamp(sunset_unix).strftime('%Y-%m-%d %H:%M:%S'))
     timezone = (data['timezone'])/3600
