@@ -161,5 +161,4 @@ def get_weather_for_three_days(message):
         bot.register_next_step_handler(message, get_weather_for_three_days)
 
 os.environ['TOKEN']
-
 bot.polling()
