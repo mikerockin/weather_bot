@@ -1,11 +1,12 @@
 import telebot
 import requests
 from datetime import datetime
+import time
 import os
 
 
 
-bot = telebot.TeleBot('5084306963:AAHChumsLFKYc0gc1HskiPuRQllRSy3g0KQ')
+bot = telebot.TeleBot('')
 current_url = 'http://api.openweathermap.org/data/2.5/weather'
 forecast_url = 'http://api.openweathermap.org/data/2.5/forecast'
 appid = '324ec9d2d156f6e482a1fcf3e81d6588'
@@ -22,9 +23,9 @@ def current_weather(city):
     humidity = (data['main']['humidity'])
     conditions = (data['weather'][0]['description'])
     sunrise_unix = int((data['sys']['sunrise']))
-    sunrise = (datetime.utcfromtimestamp(sunrise_unix).strftime('%Y-%m-%d %H:%M:%S'))
+    sunrise = time.strftime("%H:%M", time.localtime(int(sunrise_unix)))
     sunset_unix = int((data['sys']['sunset']))
-    sunset = (datetime.fromtimestamp(sunset_unix).strftime('%Y-%m-%d %H:%M:%S'))
+    sunset = time.strftime("%H:%M", time.localtime(int(sunset_unix)))
     timezone = (data['timezone'])/3600
     return temp, temp_feels_like, wind, pressure_norm, humidity, conditions, sunrise, sunset, timezone
 
@@ -44,7 +45,7 @@ def for_three_days_weather_1(city):
     response = requests.get(url=forecast_url, params=dict(q=city, APPID=appid, lang='ru', units='metric'))
     data = response.json()
     date_unix_1 = (data['list'][8]['dt'])
-    date_1 = (datetime.fromtimestamp(date_unix_1).strftime('%Y-%m-%d'))
+    date_1 = (datetime.fromtimestamp(date_unix_1).strftime('%d.%m.%Y'))
     wind_1 = round((data['list'][8]['wind']['speed']))
     conditions_1 =(data['list'][8]['weather'][0]['description'])
     temp_1 = round((data['list'][8]['main']['temp']))
@@ -58,7 +59,7 @@ def for_three_days_weather_2(city):
     response = requests.get(url=forecast_url, params=dict(q=city, APPID=appid, lang='ru', units='metric'))
     data = response.json()
     date_unix_2 = (data['list'][16]['dt'])
-    date_2 = (datetime.fromtimestamp(date_unix_2).strftime('%Y-%m-%d'))
+    date_2 = (datetime.fromtimestamp(date_unix_2).strftime('%d.%m.%Y'))
     wind_2 = round((data['list'][16]['wind']['speed']))
     conditions_2 =(data['list'][16]['weather'][0]['description'])
     temp_2 = round((data['list'][16]['main']['temp']))
@@ -72,7 +73,7 @@ def for_three_days_weather_3(city):
     response = requests.get(url=forecast_url, params=dict(q=city, APPID=appid, lang='ru', units='metric'))
     data = response.json()
     date_unix_3 = (data['list'][24]['dt'])
-    date_3 = (datetime.fromtimestamp(date_unix_3).strftime('%Y-%m-%d'))
+    date_3 = (datetime.fromtimestamp(date_unix_3).strftime('%d.%m.%Y'))
     wind_3 = round((data['list'][24]['wind']['speed']))
     conditions_3 =(data['list'][24]['weather'][0]['description'])
     temp_3 = round((data['list'][24]['main']['temp']))
@@ -108,9 +109,9 @@ def get_weather_now(message):
     try:
         w = current_weather(city)
         bot.send_message(message.from_user.id, f' Сейчас в городе {city} :  {w[5]}\nТемпература воздуха: {round(w[0])} градусов, ощущается как: {round(w[1])}\nСкорость ветра: {round(w[2])} м/с \nАтмосферное давление: {w[3]}  мм/рт.с\n'
-                                               f'Влажность: {w[4]} %\n'
-                                               f'Рассвет: {w[6]} \n'
-                                               f'Закат:   {w[7]} \n'
+                                               f'Влажность : {w[4]} %\n'
+                                               f'Рассвет : {w[6]} \n'
+                                               f'Закат : {w[7]} \n'
                                                f'Часовой пояс: + {round(w[8])}')
         bot.send_message(message.from_user.id, f'/weather_today - Узнать текущий прогноз погоды \n'
                                                f'/weather_tomorrow - Погода на завтра \n'
