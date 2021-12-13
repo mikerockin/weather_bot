@@ -1,3 +1,4 @@
+from gtts import gTTS
 import telebot
 import requests
 from datetime import datetime
@@ -8,7 +9,6 @@ bot = telebot.TeleBot('5084306963:AAHChumsLFKYc0gc1HskiPuRQllRSy3g0KQ')
 current_url = 'http://api.openweathermap.org/data/2.5/weather'
 forecast_url = 'http://api.openweathermap.org/data/2.5/forecast'
 appid = '324ec9d2d156f6e482a1fcf3e81d6588'
-
 
 def current_weather(city):
     response = requests.get(url=current_url, params=dict(q=city, APPID=appid, lang='ru', units='metric'))
@@ -81,9 +81,9 @@ def for_three_days_weather_3(city):
     humidity_3 = (data['list'][24]['main']['humidity'])
     return date_3, conditions_3, temp_3, temp_feels_like_3, wind_3,  pressure_norm_3, humidity_3
 
+
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-
     if message.text == '/weather_today':
         bot.send_message(message.from_user.id, 'Введите название города')
         bot.register_next_step_handler(message, get_weather_now)
@@ -101,16 +101,25 @@ def get_text_messages(message):
     else:
         bot.send_message(message.from_user.id, 'Введите /help, дабы узнать список команд для бота')
 
+def get_voice(message):
+    text = message
+    language = 'ru'
+    speech = gTTS(text=text, lang=language, slow=False)
+    speech.save('playme.mp3')
 
 def get_weather_now(message):
     city = message.text
     try:
         w = current_weather(city)
-        bot.send_message(message.from_user.id, f' Сейчас в городе {city} :  {w[5]}\nТемпература воздуха: {round(w[0])} градусов, ощущается как: {round(w[1])}\nСкорость ветра: {round(w[2])} м/с \nАтмосферное давление: {w[3]}  мм/рт.с\n'
+        wn = (f' Сейчас в городе {city} :  {w[5]}\nТемпература воздуха: {round(w[0])} градусов, ощущается как: {round(w[1])}\nСкорость ветра: {round(w[2])} м/с \nАтмосферное давление: {w[3]}  мм ртутного столба.\n'
                                                f'Влажность : {w[4]} %\n'
                                                f'Рассвет : {w[6]} \n'
                                                f'Закат : {w[7]} \n'
                                                f'Часовой пояс: + {round(w[8])}')
+        bot.send_message(message.from_user.id, wn)
+        voice_weather_now = get_voice(wn)
+        audio = open('playme.mp3', 'rb')
+        bot.send_audio(message.from_user.id, audio)
         bot.send_message(message.from_user.id, f'/weather_today - Узнать текущий прогноз погоды \n'
                                                f'/weather_tomorrow - Погода на завтра \n'
                                                f'/weather_for_three_days - Погода на 3 дня \n')
@@ -118,14 +127,21 @@ def get_weather_now(message):
         bot.send_message(message.from_user.id, 'Ooops... Город не найден в базе, попробуйте ещё раз')
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_now)
+        return wn
+
+
+
 
 def get_weather_tomorrow(message):
     city = message.text
     try:
         t = tomorrow_weather(city)
-        bot.send_message(message.from_user.id,
-                         f' Завтра в городе {city} : {t[1]}\nТемпература воздуха: {round(t[2])} градусов, ощущается как: {round(t[3])}\nСкорость ветра: {round(t[0])} м/с\nАтмосферное давление: {t[4]}  мм/рт.с\n'
+        wt = (f' Завтра в городе {city} : {t[1]}\nТемпература воздуха: {round(t[2])} градусов, ощущается как: {round(t[3])}\nСкорость ветра: {round(t[0])} м/с\nАтмосферное давление: {t[4]}  мм ртутного столба\n'
                          f'Влажность: {t[5]} %')
+        bot.send_message(message.from_user.id, wt)
+        voice_weather_tomorrow = get_voice(wt)
+        audio = open('playme.mp3', 'rb')
+        bot.send_audio(message.from_user.id, audio)
         bot.send_message(message.from_user.id, f'/weather_today - Узнать текущий прогноз погоды \n'
                                                f'/weather_tomorrow - Погода на завтра \n'
                                                f'/weather_for_three_days - Погода на 3 дня \n')
@@ -133,6 +149,7 @@ def get_weather_tomorrow(message):
         bot.send_message(message.from_user.id, 'Ooops... Город не найден в базе, попробуйте ещё раз')
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_tomorrow)
+        return wt
 
 
 def get_weather_for_three_days(message):
@@ -141,23 +158,26 @@ def get_weather_for_three_days(message):
         ft = for_three_days_weather_1(city)
         ff = for_three_days_weather_2(city)
         td = for_three_days_weather_3(city)
-        bot.send_message(message.from_user.id,
-                         f' {ft[0]} в городе {city} : {ft[1]}\nТемпература воздуха: {round(ft[2])} градусов, ощущается как: {round(ft[3])}\nСкорость ветра: {round(ft[4])} м/с\nАтмосферное давление: {ft[5]}  мм/рт.с\n'
-                         f'Влажность: {ft[6]} %')
-        bot.send_message(message.from_user.id,
-                         f' {ff[0]} в городе {city} : {ff[1]}\nТемпература воздуха: {round(ff[2])} градусов, ощущается как: {round(ff[3])}\nСкорость ветра: {round(ff[4])} м/с\nАтмосферное давление: {ff[5]}  мм/рт.с\n'
-                         f'Влажность: {ff[6]} %')
-        bot.send_message(message.from_user.id,
-                         f' {td[0]} в городе {city} : {td[1]}\nТемпература воздуха: {round(td[2])} градусов, ощущается как: {round(td[3])}\nСкорость ветра: {round(td[4])} м/с\nАтмосферное давление: {td[5]}  мм/рт.с\n'
-                         f'Влажность: {td[6]} %')
+        wftd_1 = (f' {ft[0]} в городе {city} : {ft[1]}\nТемпература воздуха: {round(ft[2])} градусов, ощущается как: {round(ft[3])}\nСкорость ветра: {round(ft[4])} м/с\nАтмосферное давление: {ft[5]}  мм ртутного столба\n'
+            f'Влажность: {ft[6]} %')
+        wftd_2 = (f' {ff[0]} в городе {city} : {ft[1]}\nТемпература воздуха: {round(ft[2])} градусов, ощущается как: {round(ft[3])}\nСкорость ветра: {round(ft[4])} м/с\nАтмосферное давление: {ft[5]}  мм ртутного столба\n'
+            f'Влажность: {ft[6]} %')
+        wftd_3 = (f' {td[0]} в городе {city} : {ft[1]}\nТемпература воздуха: {round(ft[2])} градусов, ощущается как: {round(ft[3])}\nСкорость ветра: {round(ft[4])} м/с\nАтмосферное давление: {ft[5]}  мм ртутного столба\n'
+            f'Влажность: {ft[6]} %')
+        bot.send_message(message.from_user.id, wftd_1)
+        bot.send_message(message.from_user.id, wftd_2)
+        bot.send_message(message.from_user.id, wftd_3)
+        voice_weather_first_day = get_voice(wftd_1 + wftd_2 + wftd_3)
+        audio = open('playme.mp3', 'rb')
+        bot.send_audio(message.from_user.id, audio)
         bot.send_message(message.from_user.id, f'/weather_today - Узнать текущий прогноз погоды \n'
                                                f'/weather_tomorrow - Погода на завтра \n'
-                                               f'/weather_for_three_days - Погода на 3 дня \n'
-                         )
+                                               f'/weather_for_three_days - Погода на 3 дня \n')
     except Exception:
         bot.send_message(message.from_user.id, 'Ooops... Город не найден в базе, попробуйте ещё раз')
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_for_three_days)
+        return wftd_1, wftd_2, wftd_3
 
-os.environ['TOKEN']
-bot.polling()
+
+bot.infinity_polling()
