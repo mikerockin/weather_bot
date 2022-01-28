@@ -4,7 +4,6 @@ import requests
 from datetime import datetime
 import time
 import os
-import datetime
 
 
 bot = telebot.TeleBot('5084306963:AAHChumsLFKYc0gc1HskiPuRQllRSy3g0KQ')
@@ -87,11 +86,6 @@ def for_three_days_weather_3(city):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    dtn = datetime.datetime.now()
-    botlogfile = open('TestBot.log', 'a')
-    print(dtn.strftime("%d-%m-%Y %H:%M"), 'Пользователь ' + message.from_user.first_name, message.from_user.id,
-          'написал следующее: ' + message.text, file=botlogfile)
-    botlogfile.close()
     if message.text == '/weather_today':
         bot.send_message(message.from_user.id, 'Введите название города')
         bot.register_next_step_handler(message, get_weather_now)
