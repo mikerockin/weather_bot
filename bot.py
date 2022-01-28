@@ -4,11 +4,14 @@ import requests
 from datetime import datetime
 import time
 import os
+import datetime
+
 
 bot = telebot.TeleBot('5084306963:AAHChumsLFKYc0gc1HskiPuRQllRSy3g0KQ')
 current_url = 'http://api.openweathermap.org/data/2.5/weather'
 forecast_url = 'http://api.openweathermap.org/data/2.5/forecast'
 appid = '324ec9d2d156f6e482a1fcf3e81d6588'
+
 
 def current_weather(city):
     response = requests.get(url=current_url, params=dict(q=city, APPID=appid, lang='ru', units='metric'))
@@ -84,6 +87,11 @@ def for_three_days_weather_3(city):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
+    dtn = datetime.datetime.now()
+    botlogfile = open('TestBot.log', 'a')
+    print(dtn.strftime("%d-%m-%Y %H:%M"), 'Пользователь ' + message.from_user.first_name, message.from_user.id,
+          'написал следующее: ' + message.text, file=botlogfile)
+    botlogfile.close()
     if message.text == '/weather_today':
         bot.send_message(message.from_user.id, 'Введите название города')
         bot.register_next_step_handler(message, get_weather_now)
@@ -107,6 +115,7 @@ def get_voice(message):
     speech = gTTS(text=text, lang=language, slow=False)
     speech.save('playme.mp3')
 
+
 def get_weather_now(message):
     city = message.text
     try:
@@ -128,8 +137,6 @@ def get_weather_now(message):
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_now)
         return wn
-
-
 
 
 def get_weather_tomorrow(message):
@@ -178,6 +185,5 @@ def get_weather_for_three_days(message):
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_for_three_days)
         return wftd_1, wftd_2, wftd_3
-
 
 bot.infinity_polling()
