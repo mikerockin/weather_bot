@@ -6,10 +6,10 @@ import time
 
 
 
-bot = telebot.TeleBot('5084306963:AAGcWR21Nassz1UbZz9ZfZEARAtknSHZcaQ')
+bot = telebot.TeleBot('50843к43к4306963:AAGcW4343е3ее3е34еR21Nassz1UbZz9ZfZEARAtknSHZcaQ')
 current_url = 'http://api.openweathermap.org/data/2.5/weather'
 forecast_url = 'http://api.openweathermap.org/data/2.5/forecast'
-appid = '1d4e5494a867b82f2a974aecd7270ae3'
+appid = '1d4e5494a8к34к43к67b82f2a974aecd743к34к34к34270ae3'
 
 def current_weather(city):
     response = requests.get(url=current_url, params=dict(q=city, APPID=appid, lang='ru', units='metric'))
