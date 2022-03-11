@@ -3,14 +3,13 @@ import telebot
 import requests
 from datetime import datetime
 import time
-import os
 
 
-bot = telebot.TeleBot('5084306963:AAHChumsLFKYc0gc1HskiPuRQllRSy3g0KQ')
+
+bot = telebot.TeleBot('5084306963:AAGcWR21Nassz1UbZz9ZfZEARAtknSHZcaQ')
 current_url = 'http://api.openweathermap.org/data/2.5/weather'
 forecast_url = 'http://api.openweathermap.org/data/2.5/forecast'
-appid = '324ec9d2d156f6e482a1fcf3e81d6588'
-
+appid = '1d4e5494a867b82f2a974aecd7270ae3'
 
 def current_weather(city):
     response = requests.get(url=current_url, params=dict(q=city, APPID=appid, lang='ru', units='metric'))
@@ -130,7 +129,7 @@ def get_weather_now(message):
         bot.send_message(message.from_user.id, 'Ooops... Город не найден в базе, попробуйте ещё раз')
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_now)
-        return wn
+    return wn
 
 
 def get_weather_tomorrow(message):
@@ -150,7 +149,7 @@ def get_weather_tomorrow(message):
         bot.send_message(message.from_user.id, 'Ooops... Город не найден в базе, попробуйте ещё раз')
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_tomorrow)
-        return wt
+    return wt
 
 
 def get_weather_for_three_days(message):
@@ -161,9 +160,9 @@ def get_weather_for_three_days(message):
         td = for_three_days_weather_3(city)
         wftd_1 = (f' {ft[0]} в городе {city} : {ft[1]}\nТемпература воздуха: {round(ft[2])} градусов, ощущается как: {round(ft[3])}\nСкорость ветра: {round(ft[4])} м/с\nАтмосферное давление: {ft[5]}  мм ртутного столба\n'
             f'Влажность: {ft[6]} %')
-        wftd_2 = (f' {ff[0]} в городе {city} : {ft[1]}\nТемпература воздуха: {round(ft[2])} градусов, ощущается как: {round(ft[3])}\nСкорость ветра: {round(ft[4])} м/с\nАтмосферное давление: {ft[5]}  мм ртутного столба\n'
-            f'Влажность: {ft[6]} %')
-        wftd_3 = (f' {td[0]} в городе {city} : {ft[1]}\nТемпература воздуха: {round(ft[2])} градусов, ощущается как: {round(ft[3])}\nСкорость ветра: {round(ft[4])} м/с\nАтмосферное давление: {ft[5]}  мм ртутного столба\n'
+        wftd_2 = (f' {ff[0]} в городе {city} : {ff[1]}\nТемпература воздуха: {round(ff[2])} градусов, ощущается как: {round(ff[3])}\nСкорость ветра: {round(ff[4])} м/с\nАтмосферное давление: {ff[5]}  мм ртутного столба\n'
+            f'Влажность: {ff[6]} %')
+        wftd_3 = (f' {td[0]} в городе {city} : {td[1]}\nТемпература воздуха: {round(td[2])} градусов, ощущается как: {round(td[3])}\nСкорость ветра: {round(td[4])} м/с\nАтмосферное давление: {td[5]}  мм ртутного столба\n'
             f'Влажность: {ft[6]} %')
         bot.send_message(message.from_user.id, wftd_1)
         bot.send_message(message.from_user.id, wftd_2)
@@ -178,6 +177,6 @@ def get_weather_for_three_days(message):
         bot.send_message(message.from_user.id, 'Ooops... Город не найден в базе, попробуйте ещё раз')
         bot.send_message(message.from_user.id, "Введите название города")
         bot.register_next_step_handler(message, get_weather_for_three_days)
-        return wftd_1, wftd_2, wftd_3
+    return wftd_1, wftd_2, wftd_3
 
 bot.infinity_polling()
