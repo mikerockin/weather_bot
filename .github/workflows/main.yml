@@ -23,26 +23,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install pythonanywhere
-        run: |
-          pip install pythonanywhere
-
       - name: Deploy to PythonAnywhere
         env:
           PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
         run: |
-          # Импортируем pythonanywhere.core
-          python -c "
-          from pythonanywhere.core import PythonAnywhere
-          pa = PythonAnywhere(username='$PYTHONANYWHERE_USERNAME', api_token='$PYTHONANYWHERE_API_TOKEN')
+          import requests
+          username = 'PYTHONANYWHERE_USERNAME'
+          token = 'PYTHONANYWHERE_API_TOKEN'
 
-          # Копирование файлов на PythonAnywhere
-          pa.upload_file(local_path='.', remote_path='/home/$PYTHONANYWHERE_USERNAME/my_app')
+          response = requests.get(
+          'https://www.pythonanywhere.com/api/v0/user/{username}/cpu/'.format(
+           username=username
+          ),
+            headers={'Authorization': 'Token {token}'.format(token=token)}
+          )
+          if response.status_code == 200:
+          print('CPU quota info:')
+           print(response.content)
+          else:
+              print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))
 
-          # Установка зависимостей на PythonAnywhere
-          pa.run_command(command='pip install -r /home/$PYTHONANYWHERE_USERNAME/my_app/requirements.txt')
 
-          # Перезапуск приложения
-          pa.reload_webapp()
-          "
