@@ -44,7 +44,7 @@ jobs:
           with open(local_path, 'rb') as file:
               response = requests.post(
                   url,
-                  headers={'Authorization': f'Token {api_token}'},
+                  headers={'Authorization': f'Token {token}'},
                   files={'content': file}
               )
 
