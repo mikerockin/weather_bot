@@ -22,18 +22,30 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Install pythonanywhere
-        run: |
-          pip install pythonanywhere
       
       - name: Deploy to PythonAnywhere
         env:
           PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
         run: |
-          # Импортируем pythonanywhere.core
+
+          pip install requests
+          
           python -c "
-          from pythonanywhere import pythonanywhere.core
-          pa = PythonAnywhere(username='$PYTHONANYWHERE_USERNAME', api_token='$PYTHONANYWHERE_API_TOKEN')
-          pa.upload_file(local_path='.', remote_path='/home/$PYTHONANYWHERE_USERNAME/my_app')"
+          import requests
+          import os
+          
+          username = os.environ['PYTHONANYWHERE_USERNAME']
+          api_token = os.environ['PYTHONANYWHERE_API_TOKEN']
+          base_url = f'https://www.pythonanywhere.com/api/v0/user/{username}/'
+
+          response = requests.post(
+             f'{base_url}webapps/MIkhailOktSu.pythonanywhere.com/reload/',
+             headers={'Authorization': f'Token {api_token}'},
+          )
+
+          if response.status_code == 200:
+             print('Приложение успешно перезапущено!')
+          else:
+             print(f'Ошибка: {response.status_code}, {response.text}')
+          "
