@@ -1,16 +1,24 @@
-# Telegram bot: @MikeRockin_weather_bot
+# Telegram bot: @Mike_WeatherBot
 
-Погодный telegram-бот, по введенному городу умеет показывать погоду: на сегодня, завтра и три дня вперёд, 
-после каждого прогноза возвращает голосовое сообщение с озвученным прогнозом погоды (удобно при вождении автомобиля)
+Weather telegram bot, for the entered city can show the weather: for today, tomorrow and three days ahead,
+after each forecast returns a voice message with the announced weather forecast (convenient when driving a car),
+a request with the name of the city is saved in the database.
 
-1. Возвращает следующие параметры: 
-2. Погодные условия(снег, дождь, пасмурно и тд.) 
-3. Температуру воздуха. 
-4. Скорость ветра. 
-5. Атмосферное давление. 
-6. Влажность. 
-7. Рассвет. 
-8. Закат. 
-9. Часовой пояс. 
+1. Returns the following parameters:
+2. Weather conditions (snow, rain, cloudy, etc.)
+3. Air temperature.
+4. Wind speed.
+5. Atmospheric pressure.
+6. Humidity.
+7. Dawn.
+8. Sunset.
+9. Time zone.
 
-Написан на чистых requests запросах с использованием погодного сервиса "OpenWeathermap", работает на Heroku.com.
+Written on pure request queries using the weather service "OpenWeathermap".
+
+The application container is available on Docker Hub under the name: mikerockin1988/my-bot 
+https://hub.docker.com/r/mikerockin1988/my-bot
+
+
+
+
