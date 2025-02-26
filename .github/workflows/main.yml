@@ -30,7 +30,7 @@ jobs:
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
           PYTHONANYWHERE_DOMAIN_NAME: ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
         run: |
-          python -c "import requests; print(requests.__version__)"
+          python -c "import requests
           username = 'PYTHONANYWHERE_USERNAME'
           token = 'PYTHONANYWHERE_API_TOKEN'
           host = 'PYTHONANYWHERE_DOMAIN_NAME'
@@ -45,5 +45,5 @@ jobs:
               print('application restarted')
               print(response.content)
           else:
-              print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))
+              print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))"
 
