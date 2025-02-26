@@ -35,8 +35,8 @@ jobs:
           token = 'PYTHONANYWHERE_API_TOKEN'
           host = 'PYTHONANYWHERE_DOMAIN_NAME'
 
-          response = requests.get(
-              'https://{host}/api/v0/user/{username}/files/home/MIkhailOktSu'.format(
+          response = requests.post(
+              'https://{host}/api/v0/user/{username}/cpu/'.format(
                   host=host, username=username
               ),
               headers={'Authorization': 'Token {token}'.format(token=token)}
