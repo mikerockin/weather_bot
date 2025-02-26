@@ -38,7 +38,10 @@ jobs:
           username = os.environ['PYTHONANYWHERE_USERNAME']
           api_token = os.environ['PYTHONANYWHERE_API_TOKEN']
           base_url = f'https://www.pythonanywhere.com/api/v0/user/{username}/'
-
+          
+          upload_file('bot.py', '/home/MIkhailOktSu/bot.py')
+          # upload_file('requirements.txt', '/home/your_username/my_app/requirements.txt')
+          
           response = requests.post(
              f'{base_url}webapps/MIkhailOktSu.pythonanywhere.com/reload/',
              headers={'Authorization': f'Token {api_token}'},
