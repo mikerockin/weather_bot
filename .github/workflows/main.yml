@@ -38,7 +38,7 @@ jobs:
           domain_name = 'MIkhailOktSu.pythonanywhere.com'
           host = 'www.pythonanywhere.com'
           remote_path = '/home/MIkhailOktSu/bot.py'
-          remote_path = '*'
+          local_path = '*'
           
           url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path}'
           with open(local_path, 'rb') as file:
