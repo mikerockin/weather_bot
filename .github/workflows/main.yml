@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' 
+          python-version: '3.10'  
 
       - name: Install dependencies
         run: |
@@ -32,14 +32,17 @@ jobs:
           PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
         run: |
-          # Авторизация
-          python -m pythonanywhere.login --username $PYTHONANYWHERE_USERNAME --api-token $PYTHONANYWHERE_API_TOKEN
+          # Импортируем pythonanywhere.core
+          python -c "
+          from pythonanywhere.core import PythonAnywhere
+          pa = PythonAnywhere(username='$PYTHONANYWHERE_USERNAME', api_token='$PYTHONANYWHERE_API_TOKEN')
 
           # Копирование файлов на PythonAnywhere
-          python -m pythonanywhere.upload_file --username $PYTHONANYWHERE_USERNAME --remote_path /home/$PYTHONANYWHERE_USERNAME/my_app --local_path .
+          pa.upload_file(local_path='.', remote_path='/home/$PYTHONANYWHERE_USERNAME/my_app')
 
           # Установка зависимостей на PythonAnywhere
-          python -m pythonanywhere.run_command --username $PYTHONANYWHERE_USERNAME "pip install -r /home/$PYTHONANYWHERE_USERNAME/my_app/requirements.txt"
+          pa.run_command(command='pip install -r /home/$PYTHONANYWHERE_USERNAME/my_app/requirements.txt')
 
           # Перезапуск приложения
-          python -m pythonanywhere.reload_webapp --username $PYTHONANYWHERE_USERNAME
+          pa.reload_webapp()
+          "
