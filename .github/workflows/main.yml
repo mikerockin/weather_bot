@@ -71,8 +71,8 @@ jobs:
           if response_2.status_code == 200:
               print('Файл requirements.txt успешно загружен!')
           else:
-              print(f'Ошибка: {response_2.status_code}, {response_2.text}') 
-          pip install -r requirements.txt "
+              print(f'Ошибка: {response_2.status_code}, {response_2.text}') "
+          pip install -r requirements.txt
 
           
 
