@@ -50,10 +50,10 @@ jobs:
                   files={'content': file}
               )
 
-          if response.status_code == 200:
+          if response_1.status_code == 200:
               print('Файл bot.py успешно загружен!')
           else:
-              print(f'Ошибка: {response.status_code}, {response.text}') 
+              print(f'Ошибка: {response_1.status_code}, {response_1.text}') 
               
           with open(local_path_2, 'rb') as file:
               response_2 = requests.post(
@@ -62,10 +62,10 @@ jobs:
                   files={'content': file}
               )
 
-          if response.status_code == 200:
+          if response_2.status_code == 200:
               print('Файл requirements.txt успешно загружен!')
           else:
-              print(f'Ошибка: {response.status_code}, {response.text}') "
+              print(f'Ошибка: {response_2.status_code}, {response_2.text}') "
 
           
 
