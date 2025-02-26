@@ -28,20 +28,19 @@ jobs:
         env:
           PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
-          PYTHONANYWHERE_DOMAIN_NAME: ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
-          PYTHONANYWHERE_HOST: ${{ secrets.PYTHONANYWHERE_HOST }}
         run: |
           python -c "
           import requests
           import os
+          
           username = os.environ['PYTHONANYWHERE_USERNAME']
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
-          domain_name = os.environ['PYTHONANYWHERE_DOMAIN_NAME']
-          host = os.environ['PYTHONANYWHERE_HOST']
+          domain_name = 'MIkhailOktSu.pythonanywhere.com'
+          host = 'www.pythonanywhere.com'
 
           response = requests.post(
               'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload/'.format(
-                  host=host, username=username
+                  host=host, username=username, domain_name=domain_name
               ),
               headers={'Authorization': 'Token {token}'.format(token=token)}
           )
