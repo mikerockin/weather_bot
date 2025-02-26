@@ -54,15 +54,5 @@ jobs:
               print(f'Ошибка: {response.status_code}, {response.text}')
 
           
-          response = requests.post(
-              'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload/'.format(
-                  host=host, username=username, domain_name=domain_name
-              ),
-              headers={'Authorization': 'Token {token}'.format(token=token)}
-          )
-          if response.status_code == 200:
-              print('application restarted')
 
-          else:
-              print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))"
 
