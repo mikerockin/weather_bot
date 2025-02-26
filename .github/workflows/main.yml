@@ -94,6 +94,7 @@ jobs:
 
           else:
               print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))"
+          python bot.py
           
 
           
