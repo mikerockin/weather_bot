@@ -55,7 +55,7 @@ jobs:
           if response_1.status_code == 200:
               print('Файл bot.py успешно загружен!')
           else:
-              print(f'Ошибка: {response_1.status_code}, {response_1.text}')
+              print(f'Error: {response_1.status_code}, {response_1.text}')
 
           # Загрузка requirements.txt
           remote_path_2 = remote_path_prefix + 'requirements.txt'
