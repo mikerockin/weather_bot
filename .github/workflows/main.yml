@@ -37,16 +37,17 @@ jobs:
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
           domain_name = 'MIkhailOktSu.pythonanywhere.com'
           host = 'www.pythonanywhere.com'
-          remote_path_1 = '/home/MIkhailOktSu/bot.py'
-          remote_path_2 = '/home/MIkhailOktSu/requirements.txt'
+          remote_path_prefix = '/home/MIkhailOktSu/'
           local_path_1 = 'bot.py'
           local_path_2 = 'requirements.txt'
-          
-          url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path_1}'
-          
+
+          # Загрузка bot.py
+          remote_path_1 = remote_path_prefix + 'bot.py'
+          url_1 = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path_1}'
+
           with open(local_path_1, 'rb') as file:
               response_1 = requests.post(
-                  url,
+                  url_1,
                   headers={'Authorization': f'Token {token}'},
                   files={'content': file}
               )
@@ -54,13 +55,15 @@ jobs:
           if response_1.status_code == 200:
               print('Файл bot.py успешно загружен!')
           else:
-              print(f'Ошибка: {response_1.status_code}, {response_1.text}') 
-              
-          url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path_2}'
+              print(f'Ошибка: {response_1.status_code}, {response_1.text}')
+
+          # Загрузка requirements.txt
+          remote_path_2 = remote_path_prefix + 'requirements.txt'
+          url_2 = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path_2}'
 
           with open(local_path_2, 'rb') as file:
               response_2 = requests.post(
-                  url,
+                  url_2,
                   headers={'Authorization': f'Token {token}'},
                   files={'content': file}
               )
