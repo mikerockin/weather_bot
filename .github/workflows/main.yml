@@ -32,12 +32,24 @@ jobs:
           python -c "
           import requests
           import os
-          
           username = os.environ['PYTHONANYWHERE_USERNAME']
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
           domain_name = 'MIkhailOktSu.pythonanywhere.com'
           host = 'www.pythonanywhere.com'
+          remote_path = '/home/MIkhailOktSu/'
+          
+          response = requests.post(
+              'https://{host}/api/v0/user/{username}/files/path{remote_path}'.format(
+                  host=host, username=username
+              ),
+              headers={'Authorization': 'Token {token}'.format(token=token)}
+          )
+          if response.status_code == 200:
+              print('application restarted')
 
+          else:
+              print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))"
+          
           response = requests.post(
               'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload/'.format(
                   host=host, username=username, domain_name=domain_name
