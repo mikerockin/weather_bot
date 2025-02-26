@@ -7,4 +7,4 @@ urllib3==1.26.7
 zipp==3.6.0
 python-dotenv==1.0.1
 pythonanywhere==0.15.5
-pythonanywhere-core 0.2.4
+pythonanywhere-core==0.2.4
