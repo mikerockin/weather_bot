@@ -32,7 +32,7 @@ jobs:
         run: |
           python -c "
           import requests
-          imort os
+          import os
           username = os.environ['PYTHONANYWHERE_USERNAME']
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
           host = os.environ['PYTHONANYWHERE_DOMAIN_NAME']
