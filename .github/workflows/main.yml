@@ -31,9 +31,9 @@ jobs:
           PYTHONANYWHERE_DOMAIN_NAME: ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
         run: |
           python -c "import requests
-          username = 'PYTHONANYWHERE_USERNAME'
-          token = 'PYTHONANYWHERE_API_TOKEN'
-          host = 'PYTHONANYWHERE_DOMAIN_NAME'
+          username = ${{ secrets.PYTHONANYWHERE_USERNAME }}
+          token = ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
+          host = ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
 
           response = requests.post(
               'https://{host}/api/v0/user/{username}/cpu/'.format(
