@@ -76,6 +76,12 @@ jobs:
           
           python -c "
           import requests
+          import os
+          
+          username = os.environ['PYTHONANYWHERE_USERNAME']
+          token = os.environ['PYTHONANYWHERE_API_TOKEN']
+          domain_name = 'MIkhailOktSu.pythonanywhere.com'
+          host = 'www.pythonanywhere.com'
 
           response = requests.post(
               'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload/'.format(
