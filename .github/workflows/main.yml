@@ -3,7 +3,7 @@ name: Deploy to PythonAnywhere
 on:
   push:
     branches:
-      - main  
+      - main 
 
 jobs:
   deploy:
@@ -23,25 +23,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install pythonanywhere
+        run: |
+          pip install pythonanywhere
+
       - name: Deploy to PythonAnywhere
         env:
           PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
         run: |
-          import requests
-          username = 'PYTHONANYWHERE_USERNAME'
-          token = 'PYTHONANYWHERE_API_TOKEN'
+          # Авторизация
+          python -m pythonanywhere.login --username $PYTHONANYWHERE_USERNAME --api-token $PYTHONANYWHERE_API_TOKEN
 
-          response = requests.get(
-          'https://www.pythonanywhere.com/api/v0/user/{username}/cpu/'.format(
-           username=username
-          ),
-            headers={'Authorization': 'Token {token}'.format(token=token)}
-          )
-          if response.status_code == 200:
-          print('CPU quota info:')
-           print(response.content)
-          else:
-              print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))
+          # Копирование файлов на PythonAnywhere
+          python -m pythonanywhere.upload_file --username $PYTHONANYWHERE_USERNAME --remote_path /home/$PYTHONANYWHERE_USERNAME/my_app --local_path .
 
+          # Установка зависимостей на PythonAnywhere
+          python -m pythonanywhere.run_command --username $PYTHONANYWHERE_USERNAME "pip install -r /home/$PYTHONANYWHERE_USERNAME/my_app/requirements.txt"
 
+          # Перезапуск приложения
+          python -m pythonanywhere.reload_webapp --username $PYTHONANYWHERE_USERNAME
