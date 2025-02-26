@@ -3,7 +3,7 @@ name: Deploy to PythonAnywhere
 on:
   push:
     branches:
-      - main  # Укажите ветку, которую хотите деплоить
+      - main  
 
 jobs:
   deploy:
@@ -33,8 +33,6 @@ jobs:
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
         run: |
 
-          python -c "
-          from pythonanywhere.core import PythonAnywhere
           pa = PythonAnywhere(username='$PYTHONANYWHERE_USERNAME', api_token='$PYTHONANYWHERE_API_TOKEN')
 
           # Копирование файлов на PythonAnywhere
