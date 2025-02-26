@@ -30,10 +30,12 @@ jobs:
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
           PYTHONANYWHERE_DOMAIN_NAME: ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
         run: |
-          python -c "import requests
-          username = ${{ secrets.PYTHONANYWHERE_USERNAME }}
-          token = ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
-          host = ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
+          python -c "
+          import requests
+          imort os
+          username = os.environ['PYTHONANYWHERE_USERNAME']
+          token = os.environ['PYTHONANYWHERE_API_TOKEN']
+          host = os.environ['PYTHONANYWHERE_DOMAIN_NAME']
 
           response = requests.post(
               'https://{host}/api/v0/user/{username}/cpu/'.format(
