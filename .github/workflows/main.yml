@@ -40,7 +40,7 @@ jobs:
           host = os.environ['PYTHONANYWHERE_HOST']
 
           response = requests.post(
-              'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload'.format(
+              'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload/'.format(
                   host=host, username=username
               ),
               headers={'Authorization': 'Token {token}'.format(token=token)}
