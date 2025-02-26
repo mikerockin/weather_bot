@@ -29,23 +29,25 @@ jobs:
           PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
           PYTHONANYWHERE_DOMAIN_NAME: ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
+          PYTHONANYWHERE_HOST: ${{ secrets.PYTHONANYWHERE_HOST }}
         run: |
           python -c "
           import requests
           import os
           username = os.environ['PYTHONANYWHERE_USERNAME']
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
-          host = os.environ['PYTHONANYWHERE_DOMAIN_NAME']
+          domain_name = os.environ['PYTHONANYWHERE_DOMAIN_NAME']
+          host = os.environ['PYTHONANYWHERE_HOST']
 
           response = requests.post(
-              'https://{host}/api/v0/user/{username}/cpu/'.format(
+              'https://{host}/api/v0/user/{username}/webapps/domain_name/reload'.format(
                   host=host, username=username
               ),
               headers={'Authorization': 'Token {token}'.format(token=token)}
           )
           if response.status_code == 200:
               print('application restarted')
-              print(response.content)
+
           else:
               print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))"
 
