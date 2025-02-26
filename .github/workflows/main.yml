@@ -37,11 +37,12 @@ jobs:
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
           domain_name = 'MIkhailOktSu.pythonanywhere.com'
           host = 'www.pythonanywhere.com'
-          remote_path = '/home/MIkhailOktSu/bot.py'
+          remote_path_1 = '/home/MIkhailOktSu/bot.py'
+          remote_path_2 = '/home/MIkhailOktSu/requirements.txt'
           local_path_1 = 'bot.py'
           local_path_2 = 'requirements.txt'
           
-          url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path}'
+          url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path_1}'
           
           with open(local_path_1, 'rb') as file:
               response_1 = requests.post(
@@ -55,6 +56,8 @@ jobs:
           else:
               print(f'Ошибка: {response_1.status_code}, {response_1.text}') 
               
+          url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path_2}'
+
           with open(local_path_2, 'rb') as file:
               response_2 = requests.post(
                   url,
