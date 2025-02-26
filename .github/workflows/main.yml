@@ -44,7 +44,7 @@ jobs:
           url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path}'
           
           with open(local_path_1, 'rb') as file:
-              response = requests.post(
+              response_1 = requests.post(
                   url,
                   headers={'Authorization': f'Token {token}'},
                   files={'content': file}
@@ -56,7 +56,7 @@ jobs:
               print(f'Ошибка: {response.status_code}, {response.text}') 
               
           with open(local_path_2, 'rb') as file:
-              response = requests.post(
+              response_2 = requests.post(
                   url,
                   headers={'Authorization': f'Token {token}'},
                   files={'content': file}
