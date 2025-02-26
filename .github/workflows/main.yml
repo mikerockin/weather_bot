@@ -38,10 +38,10 @@ jobs:
           domain_name = 'MIkhailOktSu.pythonanywhere.com'
           host = 'www.pythonanywhere.com'
           remote_path = '/home/MIkhailOktSu/bot.py'
-          local_path = 'bot.py'
           
           url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path}'
-          with open(local_path, 'rb') as file:
+          
+          with open(bot.py, 'rb') as file:
               response = requests.post(
                   url,
                   headers={'Authorization': f'Token {token}'},
@@ -49,7 +49,19 @@ jobs:
               )
 
           if response.status_code == 200:
-              print('Файл успешно загружен!')
+              print('Файл bot.py успешно загружен!')
+          else:
+              print(f'Ошибка: {response.status_code}, {response.text}') 
+              
+          with open(requirements.txt, 'rb') as file:
+              response = requests.post(
+                  url,
+                  headers={'Authorization': f'Token {token}'},
+                  files={'content': file}
+              )
+
+          if response.status_code == 200:
+              print('Файл requirements.txt успешно загружен!')
           else:
               print(f'Ошибка: {response.status_code}, {response.text}') "
 
