@@ -40,7 +40,7 @@ jobs:
           
           response = requests.post(
               'https://{host}/api/v0/user/{username}/files/path{remote_path}'.format(
-                  host=host, username=username
+                  host=host, username=username, remote_path=remote_path
               ),
               headers={'Authorization': 'Token {token}'.format(token=token)}
           )
