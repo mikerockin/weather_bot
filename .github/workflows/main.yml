@@ -26,6 +26,14 @@ jobs:
       - name: Install pythonanywhere
         run: |
           pip install pythonanywhere
-          from pythonanywhere import pythonanywhere.core
+      
+      - name: Deploy to PythonAnywhere
+        env:
+          PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+          PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
+        run: |
+          # Импортируем pythonanywhere.core
+          python -c "
+          from pythonanywhere.core import PythonAnywhere
           pa = PythonAnywhere(username='$PYTHONANYWHERE_USERNAME', api_token='$PYTHONANYWHERE_API_TOKEN')
           pa.upload_file(local_path='.', remote_path='/home/$PYTHONANYWHERE_USERNAME/my_app')
