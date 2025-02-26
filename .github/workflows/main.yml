@@ -51,7 +51,7 @@ jobs:
           if response.status_code == 200:
               print('Файл успешно загружен!')
           else:
-              print(f'Ошибка: {response.status_code}, {response.text}')
+              print(f'Ошибка: {response.status_code}, {response.text}') "
 
           
 
