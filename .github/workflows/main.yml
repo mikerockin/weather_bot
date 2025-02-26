@@ -32,23 +32,27 @@ jobs:
           python -c "
           import requests
           import os
+          
           username = os.environ['PYTHONANYWHERE_USERNAME']
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
           domain_name = 'MIkhailOktSu.pythonanywhere.com'
           host = 'www.pythonanywhere.com'
-          remote_path = '/home/MIkhailOktSu/'
+          remote_path = '/home/MIkhailOktSu/bot.py'
+          remote_path = '*'
           
-          response = requests.post(
-              'https://{host}/api/v0/user/{username}/files/path{remote_path}'.format(
-                  host=host, username=username, remote_path=remote_path
-              ),
-              headers={'Authorization': 'Token {token}'.format(token=token)}
-          )
-          if response.status_code == 200:
-              print('application restarted')
+          url = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path}'
+          with open(local_path, 'rb') as file:
+              response = requests.post(
+                  url,
+                  headers={'Authorization': f'Token {api_token}'},
+                  files={'content': file}
+              )
 
+          if response.status_code == 200:
+              print('Файл успешно загружен!')
           else:
-              print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))"
+              print(f'Ошибка: {response.status_code}, {response.text}')
+
           
           response = requests.post(
               'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload/'.format(
