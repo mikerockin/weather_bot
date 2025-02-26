@@ -36,4 +36,4 @@ jobs:
           python -c "
           from pythonanywhere.core import PythonAnywhere
           pa = PythonAnywhere(username='$PYTHONANYWHERE_USERNAME', api_token='$PYTHONANYWHERE_API_TOKEN')
-          pa.upload_file(local_path='.', remote_path='/home/$PYTHONANYWHERE_USERNAME/my_app')
+          pa.upload_file(local_path='.', remote_path='/home/$PYTHONANYWHERE_USERNAME/my_app')"
