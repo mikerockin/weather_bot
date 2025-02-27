@@ -5,7 +5,7 @@ Status of Last Deployment:<br>
 
 
 
-# Telegram bot: @Mike_WeatherBot
+## Telegram bot: @Mike_WeatherBot
 
 Weather telegram bot, for the entered city can show the weather: for today, tomorrow and three days ahead,
 after each forecast returns a voice message with the announced weather forecast (convenient when driving a car),
@@ -21,10 +21,10 @@ a request with the name of the city is saved in the database.
 8. Sunset.
 9. Time zone.
 
-Features:
+**Features**:
 - Written on pure request queries using the weather service "OpenWeathermap";
 - Working on www.pythonanywhere.com, restarts via internal tasks pythonanywhere;
-- Deployment with Github Actions
+- Deployment with Github Actions:
 
 The application container is available on Docker Hub under the name: mikerockin1988/my-bot 
 https://hub.docker.com/r/mikerockin1988/my-bot
