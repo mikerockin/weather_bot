@@ -42,7 +42,7 @@ jobs:
           local_path_1 = 'bot.py'
           local_path_2 = 'requirements.txt'
 
-          # Загрузка bot.py
+          # Upload bot.py
           remote_path_1 = remote_path_prefix + 'bot.py'
           url_1 = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path_1}'
 
@@ -58,7 +58,7 @@ jobs:
           else:
               print(f'Error: {response_1.status_code}, {response_1.text}')
 
-          # Загрузка requirements.txt
+          # Upload  requirements.txt
           remote_path_2 = remote_path_prefix + 'requirements.txt'
           url_2 = f'https://www.pythonanywhere.com/api/v0/user/{username}/files/path{remote_path_2}'
 
@@ -73,20 +73,56 @@ jobs:
               print('File requirements.txt uploaded successfully!')
           else:
               print(f'Error: {response_2.status_code}, {response_2.text}') "
-          
-      - name: Install dependencies into pythonanywhere
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          ls -lah
-          pwd
-          ls -lah /home/MIkhailOktSu/
 
-    #  - name: Run bot
-     #   env:
-      #      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-      #  run: |
-       #   nohup python3 bot.py > bot.log 2>&1 &
+              # Install dependencies
+          python -c "
+          import requests
+          import os
+
+          username = os.environ['PYTHONANYWHERE_USERNAME']
+          api_token = os.environ['PYTHONANYWHERE_API_TOKEN']
+          base_url = f'https://www.pythonanywhere.com/api/v0/user/{username}/'
+
+          response = requests.post(
+              f'{base_url}bash/',
+              headers={'Authorization': f'Token {api_token}'},
+              json={
+                  'command': 'pip install -r /home/{username}/requirements.txt'
+              }
+          )
+          if response.status_code == 200:
+              print('Dependencies installed successfully!')
+          else:
+              print(f'Error: {response.status_code}, {response.text}')
+          "
+
+      - name: Run bot on PythonAnywhere
+        env:
+          PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+          PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
+        run: |
+          # Run bot on PythonAnywhere
+          python -c "
+          import requests
+          import os
+
+          username = os.environ['PYTHONANYWHERE_USERNAME']
+          api_token = os.environ['PYTHONANYWHERE_API_TOKEN']
+          base_url = f'https://www.pythonanywhere.com/api/v0/user/{username}/'
+
+          # Executing a command on PythonAnywhere
+          response = requests.post(
+              f'{base_url}bash/',
+              headers={'Authorization': f'Token {api_token}'},
+              json={
+                  'command': 'python3 /home/{username}/bot.py'
+              }
+          )
+          if response.status_code == 200:
+              print('Bot launched sucessfully!')
+          else:
+              print(f'Error: {response.status_code}, {response.text}')
+          "
 
 
           
