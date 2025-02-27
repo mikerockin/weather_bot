@@ -74,32 +74,6 @@ jobs:
               print(f'Error: {response_2.status_code}, {response_2.text}') "
 
 
-              # Install dependencies
-          python -c "
-          import requests
-          import os
-          
-          username = os.environ['PYTHONANYWHERE_USERNAME']
-          token = os.environ['PYTHONANYWHERE_API_TOKEN']
-
-
-
-          base_url = f'https://www.pythonanywhere.com/api/v0/user/{username}/'
-
-          response = requests.post(
-              f'{base_url}bash/',
-              headers={'Authorization': f'Token {token}'},
-              json={
-                  'command': 'pip install -r /home/{username}/requirements.txt'
-              }
-          )
-          if response.status_code == 200:
-              print('Dependencies installed successfully!')
-          else:
-              print(f'Error: {response.status_code}, {response.text}')
-          "
-
-
 
           
 
