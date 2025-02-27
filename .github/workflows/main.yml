@@ -80,6 +80,7 @@ jobs:
           pip install -r requirements.txt
           ls -lah
           pwd
+          ls -lah /home/MIkhailOktSu/
 
     #  - name: Run bot
      #   env:
