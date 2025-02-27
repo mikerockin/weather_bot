@@ -1,11 +1,7 @@
 
-
+## Telegram bot: @Mike_WeatherBot
 Status of Last Deployment:<br>
 <img src="https://github.com/mikerockin/weather_bot/workflows/Deploy to PythonAnywhere/badge.svg? branch=main"><br>
-
-
-
-## Telegram bot: @Mike_WeatherBot
 
 Weather telegram bot, for the entered city can show the weather: for today, tomorrow and three days ahead,
 after each forecast returns a voice message with the announced weather forecast (convenient when driving a car),
