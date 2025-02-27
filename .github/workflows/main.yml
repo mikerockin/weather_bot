@@ -28,7 +28,6 @@ jobs:
         env:
           PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
-          PYTHONANYWHERE_DOMAIN_NAME: ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
         run: |
           python -c "
           import requests
@@ -36,10 +35,10 @@ jobs:
           
           username = os.environ['PYTHONANYWHERE_USERNAME']
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
-          domain_name = os.environ['PYTHONANYWHERE_DOMAIN_NAME']
+          domain_name = 'MIkhailOktSu'
           host = 'www.pythonanywhere.com'
           
-          remote_path_prefix = '/home/{username}/'
+          remote_path_prefix = '/home/MIkhailOktSu/'
           local_path_1 = 'bot.py'
           local_path_2 = 'requirements.txt'
 
