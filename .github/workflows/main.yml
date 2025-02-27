@@ -73,9 +73,12 @@ jobs:
               print('File requirements.txt uploaded successfully!')
           else:
               print(f'Error: {response_2.status_code}, {response_2.text}') "
-          pip install -r requirements.txt
-          python3 bot.py
           
+      - name: Install dependencies into pythonanywhere
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
 
           
 
