@@ -21,8 +21,10 @@ a request with the name of the city is saved in the database.
 8. Sunset.
 9. Time zone.
 
-Written on pure request queries using the weather service "OpenWeathermap".
-Working on www.pythonanywhere.com, restarts via internal tasks pythonanywhere
+Features:
+- Written on pure request queries using the weather service "OpenWeathermap";
+- Working on www.pythonanywhere.com, restarts via internal tasks pythonanywhere;
+- Deployment with Github Actions
 
 The application container is available on Docker Hub under the name: mikerockin1988/my-bot 
 https://hub.docker.com/r/mikerockin1988/my-bot
