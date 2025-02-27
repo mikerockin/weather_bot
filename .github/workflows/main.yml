@@ -81,9 +81,9 @@ jobs:
 
       - name: Run bot
         env:
-            TELEGRAM_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+            TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
-          python3 bot.py
+          python3 bot.py &
 
 
           
