@@ -24,6 +24,6 @@ a request with the name of the city is saved in the database.
 - The application container is available on Docker Hub under the name: mikerockin1988/my-bot 
 https://hub.docker.com/r/mikerockin1988/my-bot
 
-
+[![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)]()
 
 
