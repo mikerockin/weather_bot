@@ -1,8 +1,7 @@
-# Github Actions deploy Telegram bo to www.pythonanywhere.com
 
 
 Status of Last Deployment:<br>
-<img src="https://github.com/mikerockin/weather_bot/workflows/Github Actions deploy/badge.svg? branch=main"><br>
+<img src="https://github.com/mikerockin/weather_bot/workflows/Deploy to PythonAnywhere/badge.svg? branch=main"><br>
 
 
 
