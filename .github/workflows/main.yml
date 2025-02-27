@@ -78,12 +78,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          ls -lah
+          pwd
 
-      - name: Run bot
-        env:
-            TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        run: |
-          nohup python3 bot.py > bot.log 2>&1 &
+    #  - name: Run bot
+     #   env:
+      #      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      #  run: |
+       #   nohup python3 bot.py > bot.log 2>&1 &
 
 
           
