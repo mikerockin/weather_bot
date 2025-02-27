@@ -96,33 +96,6 @@ jobs:
               print(f'Error: {response.status_code}, {response.text}')
           "
 
-      - name: Run bot on PythonAnywhere
-        env:
-          PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
-          PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
-        run: |
-          # Run bot on PythonAnywhere
-          python -c "
-          import requests
-          import os
-
-          username = os.environ['PYTHONANYWHERE_USERNAME']
-          api_token = os.environ['PYTHONANYWHERE_API_TOKEN']
-          base_url = f'https://www.pythonanywhere.com/api/v0/user/{username}/'
-
-          # Executing a command on PythonAnywhere
-          response = requests.post(
-              f'{base_url}bash/',
-              headers={'Authorization': f'Token {api_token}'},
-              json={
-                  'command': 'python3 /home/{username}/bot.py'
-              }
-          )
-          if response.status_code == 200:
-              print('Bot launched sucessfully!')
-          else:
-              print(f'Error: {response.status_code}, {response.text}')
-          "
 
 
           
