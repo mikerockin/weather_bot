@@ -25,5 +25,5 @@ a request with the name of the city is saved in the database.
 https://hub.docker.com/r/mikerockin1988/my-bot
 
 [![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)]()
-
+[![Github All Releases](https://img.shields.io/github/downloads/mikerockin/weather_bot/total.svg)]()
 
