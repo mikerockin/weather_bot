@@ -28,6 +28,7 @@ jobs:
         env:
           PYTHONANYWHERE_USERNAME: ${{ secrets.PYTHONANYWHERE_USERNAME }}
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
+          PYTHONANYWHERE_DOMAIN_NAME: ${{ secrets.PYTHONANYWHERE_DOMAIN_NAME }}
         run: |
           python -c "
           import requests
@@ -35,9 +36,10 @@ jobs:
           
           username = os.environ['PYTHONANYWHERE_USERNAME']
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
-          domain_name = 'MIkhailOktSu.pythonanywhere.com'
+          domain_name = os.environ['PYTHONANYWHERE_DOMAIN_NAME']
           host = 'www.pythonanywhere.com'
-          remote_path_prefix = '/home/MIkhailOktSu/'
+          
+          remote_path_prefix = '/home/{username}/'
           local_path_1 = 'bot.py'
           local_path_2 = 'requirements.txt'
 
@@ -53,7 +55,7 @@ jobs:
               )
 
           if response_1.status_code == 200:
-              print('Файл bot.py успешно загружен!')
+              print('File bot.py uploaded successfully!')
           else:
               print(f'Error: {response_1.status_code}, {response_1.text}')
 
@@ -69,32 +71,11 @@ jobs:
               )
 
           if response_2.status_code == 200:
-              print('Файл requirements.txt успешно загружен!')
+              print('File requirements.txt uploaded successfully!')
           else:
               print(f'Error: {response_2.status_code}, {response_2.text}') "
           pip install -r requirements.txt
-          
-          python -c "
-          import requests
-          import os
-          
-          username = os.environ['PYTHONANYWHERE_USERNAME']
-          token = os.environ['PYTHONANYWHERE_API_TOKEN']
-          domain_name = 'MIkhailOktSu.pythonanywhere.com'
-          host = 'www.pythonanywhere.com'
-
-          response = requests.post(
-              'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload/'.format(
-                  host=host, username=username, domain_name=domain_name
-              ),
-              headers={'Authorization': 'Token {token}'.format(token=token)}
-          )
-          if response.status_code == 200:
-              print('application restarted')
-
-          else:
-              print('Got unexpected status code {}: {!r}'.format(response.status_code, response.content))"
-          python bot.py
+          python3 bot.py
           
 
           
