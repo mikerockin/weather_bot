@@ -35,8 +35,7 @@ jobs:
           
           username = os.environ['PYTHONANYWHERE_USERNAME']
           token = os.environ['PYTHONANYWHERE_API_TOKEN']
-          domain_name = 'MIkhailOktSu'
-          host = 'www.pythonanywhere.com'
+
           
           remote_path_prefix = '/home/MIkhailOktSu/'
           local_path_1 = 'bot.py'
@@ -74,18 +73,22 @@ jobs:
           else:
               print(f'Error: {response_2.status_code}, {response_2.text}') "
 
+
               # Install dependencies
           python -c "
           import requests
           import os
-
+          
           username = os.environ['PYTHONANYWHERE_USERNAME']
-          api_token = os.environ['PYTHONANYWHERE_API_TOKEN']
+          token = os.environ['PYTHONANYWHERE_API_TOKEN']
+
+
+
           base_url = f'https://www.pythonanywhere.com/api/v0/user/{username}/'
 
           response = requests.post(
               f'{base_url}bash/',
-              headers={'Authorization': f'Token {api_token}'},
+              headers={'Authorization': f'Token {token}'},
               json={
                   'command': 'pip install -r /home/{username}/requirements.txt'
               }
