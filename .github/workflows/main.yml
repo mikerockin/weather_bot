@@ -83,7 +83,7 @@ jobs:
         env:
             TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
-          python3 bot.py &
+          nohup python3 bot.py > bot.log 2>&1 &
 
 
           
